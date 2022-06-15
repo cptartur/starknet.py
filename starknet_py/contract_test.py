@@ -59,24 +59,24 @@ end
 """
 
 EXPECTED_HASH = (
-    2767133637016006695125577369743492278827480805001470205448944437134861258965
+    2688301851207574685508212224129703770606463401447839958830147806311718774459
 )
 
 
 EXPECTED_HASH_WITH_IMPORTS = (
-    2824740597818368748846455525738594583883439901518687339337045493609254033404
+    603420158705833223501206970831661889777199487594650811186429235006593996536
 )
 
 EXPECTED_ADDRESS = (
-    3046198292581715633143389750649762877325412695701500547187874584238544215539
+    1183003402307275178803839215685289961453582349860640547370312396332804297742
 )
 
 EXPECTED_ADDRESS_WITH_IMPORTS = (
-    1220010402807226171903428091897681365505165756832763447362783771809682550518
+    2924990367958241019938053433987418844398143161443730738087047988090963286172
 )
 
 directory = os.path.dirname(__file__)
-search_path = Path(directory, "utils/compiler/mock-contracts")
+search_path = Path(directory, "compile/mock-contracts")
 
 
 def test_compute_hash():
@@ -85,7 +85,9 @@ def test_compute_hash():
 
 def test_compute_hash_with_search_path():
     assert (
-        Contract.compute_contract_hash(SOURCE_WITH_IMPORTS, search_paths=[search_path])
+        Contract.compute_contract_hash(
+            SOURCE_WITH_IMPORTS, search_paths=[str(search_path)]
+        )
         == EXPECTED_HASH_WITH_IMPORTS
     )
 
@@ -104,9 +106,18 @@ def test_compute_address_with_imports():
         Contract.compute_address(
             compilation_source=SOURCE_WITH_IMPORTS,
             salt=1111,
-            search_paths=[search_path],
+            search_paths=[str(search_path)],
         )
         == EXPECTED_ADDRESS_WITH_IMPORTS
+    )
+
+
+def test_compute_address_throws_on_no_source():
+    with pytest.raises(ValueError) as exinfo:
+        Contract.compute_address(salt=1111)
+
+    assert "One of compiled_contract or compilation_source is required." in str(
+        exinfo.value
     )
 
 
