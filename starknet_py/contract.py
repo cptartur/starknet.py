@@ -298,6 +298,7 @@ class ContractFunction:
         *args,
         version: int = 0,
         max_fee: int = None,
+        new_param: int = 0,
         **kwargs,
     ) -> PreparedFunctionCall:
         """
