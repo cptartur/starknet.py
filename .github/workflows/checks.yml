@@ -110,6 +110,16 @@ jobs:
           persist-credentials: false
           ref: v1.0.0-alpha.4
           path: cairo
+      - name: Cache rust dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Build compiler
         working-directory: ./cairo
         run: |
