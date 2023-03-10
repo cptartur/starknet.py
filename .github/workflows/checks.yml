@@ -111,6 +111,7 @@ jobs:
           ref: v1.0.0-alpha.4
           path: cairo
       - name: Cache rust dependencies
+        # Taken from https://github.com/actions/cache/blob/main/examples.md#rust---cargo
         uses: actions/cache@v3
         with:
           path: |
