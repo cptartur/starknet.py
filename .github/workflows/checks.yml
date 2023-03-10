@@ -116,8 +116,8 @@ jobs:
           cargo build
       - name: Create manifest file
         run: |
-          touch ./tests/e2e/manifest-path
-          readlink -f ./cairo/Cargo.toml >> ./tests/e2e/manifest-path
+          touch starknet_py/tests/e2e/manifest-path
+          readlink -f ./cairo/Cargo.toml >> starknet_py/tests/e2e/manifest-path
       - name: Check circular imports
         run: |
           poetry run poe circular_imports_check
