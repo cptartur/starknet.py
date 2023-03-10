@@ -108,7 +108,7 @@ jobs:
         with:
           repository: starkware-libs/cairo
           persist-credentials: false
-          fetch-depth: 0
+          ref: v1.0.0-alpha.4
           path: cairo
       - name: Build compiler
         working-directory: ./cairo
@@ -117,7 +117,7 @@ jobs:
       - name: Create manifest file
         run: |
           touch starknet_py/tests/e2e/manifest-path
-          readlink -f ./cairo/Cargo.toml >> starknet_py/tests/e2e/manifest-path
+          readlink -f cairo/Cargo.toml >> starknet_py/tests/e2e/manifest-path
       - name: Check circular imports
         run: |
           poetry run poe circular_imports_check
